@@ -794,12 +794,14 @@ if page == "Design Workflow":
                 }}
                 
                 // Create SVG container for connections - make it cover entire canvas
+                // IMPORTANT: Add SVG BEFORE nodes so nodes render on top
                 const canvasRect = canvas.getBoundingClientRect();
                 const svgContainer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                svgContainer.setAttribute('width', '100%');
-                svgContainer.setAttribute('height', '100%');
-                svgContainer.style.cssText = 'position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; overflow: visible;';
-                canvas.appendChild(svgContainer);
+                svgContainer.setAttribute('width', '2000');
+                svgContainer.setAttribute('height', '1000');
+                svgContainer.setAttribute('viewBox', '0 0 2000 1000');
+                svgContainer.style.cssText = 'position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; overflow: visible;';
+                canvas.insertBefore(svgContainer, canvas.firstChild);
                 
                 // Add arrowhead marker definition
                 const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
@@ -819,34 +821,45 @@ if page == "Design Workflow":
                 
                 // Draw connections from connectionsData array
                 console.log('🔗 Drawing', connectionsData.length, 'connections...');
-                connectionsData.forEach((conn, connIndex) => {{
-                    const fromNode = nodeMap[conn.from];
-                    const toNode = nodeMap[conn.to];
-                    
-                    if (fromNode && toNode) {{
-                        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                        // Calculate connection points (right edge of source, left edge of target)
-                        const x1 = fromNode.x + 150; // Right edge of source node
-                        const y1 = fromNode.y + 50;  // Middle vertically
-                        const x2 = toNode.x;         // Left edge of target node
-                        const y2 = toNode.y + 50;   // Middle vertically
-                        
-                        line.setAttribute('x1', x1);
-                        line.setAttribute('y1', y1);
-                        line.setAttribute('x2', x2);
-                        line.setAttribute('y2', y2);
-                        line.setAttribute('stroke', '#0066CC');
-                        line.setAttribute('stroke-width', '3');
-                        line.setAttribute('marker-end', 'url(#arrowhead)');
-                        line.setAttribute('opacity', '0.8');
-                        
-                        svgContainer.appendChild(line);
-                        console.log('  → Connection drawn:', fromNode.type, '→', toNode.type);
-                    }}
-                }});
+                console.log('🔗 Connections data:', connectionsData);
+                console.log('🔗 Node map:', nodeMap);
                 
-                // Also draw sequential connections if no explicit connections exist
-                if (connectionsData.length === 0 && nodesData.length > 1) {{
+                if (connectionsData.length > 0) {{
+                    connectionsData.forEach((conn, connIndex) => {{
+                        const fromNode = nodeMap[conn.from];
+                        const toNode = nodeMap[conn.to];
+                        
+                        console.log('  Checking connection', connIndex, ':', conn.from, '→', conn.to);
+                        console.log('    From node:', fromNode);
+                        console.log('    To node:', toNode);
+                        
+                        if (fromNode && toNode) {{
+                            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                            // Calculate connection points (right edge of source, left edge of target)
+                            const x1 = fromNode.x + 150; // Right edge of source node
+                            const y1 = fromNode.y + 50;  // Middle vertically
+                            const x2 = toNode.x;         // Left edge of target node
+                            const y2 = toNode.y + 50;   // Middle vertically
+                            
+                            console.log('    Drawing line from (' + x1 + ',' + y1 + ') to (' + x2 + ',' + y2 + ')');
+                            
+                            line.setAttribute('x1', x1);
+                            line.setAttribute('y1', y1);
+                            line.setAttribute('x2', x2);
+                            line.setAttribute('y2', y2);
+                            line.setAttribute('stroke', '#0066CC');
+                            line.setAttribute('stroke-width', '4');
+                            line.setAttribute('marker-end', 'url(#arrowhead)');
+                            line.setAttribute('opacity', '1');
+                            
+                            svgContainer.appendChild(line);
+                            console.log('  ✅ Connection drawn:', fromNode.type, '→', toNode.type);
+                        }} else {{
+                            console.warn('  ⚠️ Connection skipped - node not found');
+                        }}
+                    }});
+                }} else if (nodesData.length > 1) {{
+                    // Also draw sequential connections if no explicit connections exist
                     console.log('⚠️ No explicit connections, drawing sequential flow...');
                     for (let i = 0; i < nodesData.length - 1; i++) {{
                         const fromNode = nodesData[i];
@@ -857,16 +870,19 @@ if page == "Design Workflow":
                         const x2 = toNode.x;
                         const y2 = toNode.y + 50;
                         
+                        console.log('  Drawing sequential line', i, 'from (' + x1 + ',' + y1 + ') to (' + x2 + ',' + y2 + ')');
+                        
                         line.setAttribute('x1', x1);
                         line.setAttribute('y1', y1);
                         line.setAttribute('x2', x2);
                         line.setAttribute('y2', y2);
                         line.setAttribute('stroke', '#0066CC');
-                        line.setAttribute('stroke-width', '3');
+                        line.setAttribute('stroke-width', '4');
                         line.setAttribute('marker-end', 'url(#arrowhead)');
-                        line.setAttribute('opacity', '0.8');
+                        line.setAttribute('opacity', '1');
                         
                         svgContainer.appendChild(line);
+                        console.log('  ✅ Sequential connection drawn:', fromNode.type, '→', toNode.type);
                     }}
                 }}
                 
@@ -877,7 +893,7 @@ if page == "Design Workflow":
                         nodeElement.className = 'workflow-node';
                         nodeElement.id = 'node-' + node.id;
                         
-                        // Ensure visible styling
+                        // Ensure visible styling - nodes should be above SVG (z-index 10)
                         const nodeStyle = 'position: absolute !important; ' +
                             'left: ' + node.x + 'px !important; ' +
                             'top: ' + node.y + 'px !important; ' +
@@ -888,7 +904,7 @@ if page == "Design Workflow":
                             'min-width: 150px !important; ' +
                             'cursor: move !important; ' +
                             'box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important; ' +
-                            'z-index: 100 !important; ' +
+                            'z-index: 10 !important; ' +
                             'user-select: none !important; ' +
                             'display: block !important; ' +
                             'visibility: visible !important; ' +
@@ -931,12 +947,19 @@ if page == "Design Workflow":
                     oldSvg.remove();
                 }}
                 
-                // Recreate SVG container
+                // Recreate SVG container - insert before nodes
                 const svgContainer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                svgContainer.setAttribute('width', '100%');
-                svgContainer.setAttribute('height', '100%');
-                svgContainer.style.cssText = 'position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; overflow: visible;';
-                canvas.appendChild(svgContainer);
+                svgContainer.setAttribute('width', '2000');
+                svgContainer.setAttribute('height', '1000');
+                svgContainer.setAttribute('viewBox', '0 0 2000 1000');
+                svgContainer.style.cssText = 'position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; overflow: visible;';
+                // Insert SVG before first node (so nodes render on top)
+                const firstNode = canvas.querySelector('.workflow-node');
+                if (firstNode) {{
+                    canvas.insertBefore(svgContainer, firstNode);
+                }} else {{
+                    canvas.appendChild(svgContainer);
+                }}
                 
                 // Add arrowhead marker
                 const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
