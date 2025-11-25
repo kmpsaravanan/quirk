@@ -1,0 +1,242 @@
+<mxfile host="Electron" modified="2025-11-25T06:43:05.836Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.4.0 Chrome/112.0.5615.204 Electron/24.5.1 Safari/537.36" etag="O0PnUX5fsFQxsB2oXhmO" version="21.4.0" type="device">
+  <diagram name="JioSign RAG Architecture" id="architecture">
+    <mxGraphModel dx="1574" dy="723" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="JioSign RAG Architecture - Document &amp; Transaction Search" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="500" y="20" width="600" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="datasources_group" value="Data Sources" style="swimlane;startSize=40;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=14;" parent="1" vertex="1">
+          <mxGeometry x="80" y="100" width="280" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="table_t1" value="Table T1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1" parent="datasources_group" vertex="1">
+          <mxGeometry x="80" y="60" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="table_t2" value="Table T2" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1" parent="datasources_group" vertex="1">
+          <mxGeometry x="80" y="140" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="table_t3" value="Table T3" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1" parent="datasources_group" vertex="1">
+          <mxGeometry x="80" y="220" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pdf_docs" value="PDF Documents" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1;size=15;" parent="datasources_group" vertex="1">
+          <mxGeometry x="80" y="310" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="processing_group" value="Data Processing &amp; Orchestration" style="swimlane;startSize=40;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=14;" parent="1" vertex="1">
+          <mxGeometry x="440" y="100" width="480" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="pypdf" value="PyPDF&lt;br&gt;(PDF Loader)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;fontStyle=1" parent="processing_group" vertex="1">
+          <mxGeometry x="40" y="300" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="llm_summarize" value="LLM&lt;br&gt;Summarize&lt;br&gt;(1000 words)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1" parent="processing_group" vertex="1">
+          <mxGeometry x="180" y="300" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="airflow" value="Apache Airflow&lt;br&gt;(Orchestration)&lt;br&gt;&lt;br&gt;Collect Rows&lt;br&gt;Group by ID" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;fontStyle=1" parent="processing_group" vertex="1">
+          <mxGeometry x="160" y="80" width="160" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="vectorization" value="Vectorization&lt;br&gt;Process" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1" parent="processing_group" vertex="1">
+          <mxGeometry x="350" y="140" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vectorstore_group" value="Vector Storage (Anyone)" style="swimlane;startSize=40;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=14;" parent="1" vertex="1">
+          <mxGeometry x="1000" y="100" width="280" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="weaviate" value="Weaviate&lt;br&gt;Vector DB" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#b1ddf0;strokeColor=#10739e;fontSize=12;fontStyle=1" parent="vectorstore_group" vertex="1">
+          <mxGeometry x="80" y="60" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="chromadb" value="ChromaDB&lt;br&gt;Vector DB" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#b1ddf0;strokeColor=#10739e;fontSize=12;fontStyle=1" parent="vectorstore_group" vertex="1">
+          <mxGeometry x="80" y="160" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pgvector" value="Postgres&lt;br&gt;VectorStore&lt;br&gt;(pgvector)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#b1ddf0;strokeColor=#10739e;fontSize=12;fontStyle=1" parent="vectorstore_group" vertex="1">
+          <mxGeometry x="80" y="260" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="documentdb" value="Document DB&lt;br&gt;(Metadata)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#fad7ac;strokeColor=#b46504;fontSize=12;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="1370" y="120" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="search_group" value="Search &amp; Retrieval (RAG)" style="swimlane;startSize=40;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=14;" parent="1" vertex="1">
+          <mxGeometry x="440" y="580" width="480" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="hybrid_rag" value="Hybrid RAG&lt;br&gt;System" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1" parent="search_group" vertex="1">
+          <mxGeometry x="60" y="70" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="index_llm" value="Index + LLM&lt;br&gt;(Query Processing)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1" parent="search_group" vertex="1">
+          <mxGeometry x="220" y="70" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="search_interface" value="NLP Search Interface&lt;br&gt;(JioSign Users)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1" parent="search_group" vertex="1">
+          <mxGeometry x="140" y="180" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="users" value="JioSign Users" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="200" y="920" width="50" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_t1_airflow" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" source="table_t1" target="airflow" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_t1" value="Transaction Data" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" parent="arrow_t1_airflow" vertex="1" connectable="0">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow_t2_airflow" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" source="table_t2" target="airflow" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_t3_airflow" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" source="table_t3" target="airflow" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_pdf_pypdf" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" source="pdf_docs" target="pypdf" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_pdf" value="Load PDF" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" parent="arrow_pdf_pypdf" vertex="1" connectable="0">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow_pypdf_llm" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" source="pypdf" target="llm_summarize" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_summarize" value="Summarize" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" parent="arrow_pypdf_llm" vertex="1" connectable="0">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow_llm_airflow" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" source="llm_summarize" target="airflow" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_llm_airflow" value="Send to Row" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" parent="arrow_llm_airflow" vertex="1" connectable="0">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow_airflow_vector" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" source="airflow" target="vectorization" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_vectorize" value="Vectorize" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" parent="arrow_airflow_vector" vertex="1" connectable="0">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow_vector_weaviate" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=2;fillColor=#b1ddf0;strokeColor=#10739e;" parent="1" source="vectorization" target="weaviate" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_vector_chroma" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=2;fillColor=#b1ddf0;strokeColor=#10739e;" parent="1" source="vectorization" target="chromadb" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_store" value="Store Vectors" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" parent="arrow_vector_chroma" vertex="1" connectable="0">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow_vector_pgvector" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=2;fillColor=#b1ddf0;strokeColor=#10739e;" parent="1" source="vectorization" target="pgvector" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_airflow_docdb" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=2;fillColor=#fad7ac;strokeColor=#b46504;dashed=1;" parent="1" source="airflow" target="documentdb" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="940" y="215" />
+              <mxPoint x="940" y="90" />
+              <mxPoint x="1440" y="90" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label_metadata" value="Store Metadata" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" parent="arrow_airflow_docdb" vertex="1" connectable="0">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow_weaviate_rag" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" source="weaviate" target="hybrid_rag" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="960" y="195" />
+              <mxPoint x="960" y="560" />
+              <mxPoint x="560" y="560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow_chroma_rag" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" source="chromadb" target="hybrid_rag" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="960" y="295" />
+              <mxPoint x="960" y="560" />
+              <mxPoint x="560" y="560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label_retrieve" value="Vector Search" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" parent="arrow_chroma_rag" vertex="1" connectable="0">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint x="10" y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow_pgvector_rag" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" source="pgvector" target="hybrid_rag" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="960" y="400" />
+              <mxPoint x="960" y="560" />
+              <mxPoint x="560" y="560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow_rag_index" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" source="hybrid_rag" target="index_llm" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_process" value="Process Query" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" parent="arrow_rag_index" vertex="1" connectable="0">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow_index_search" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" source="index_llm" target="search_interface" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_results" value="Return Results" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" parent="arrow_index_search" vertex="1" connectable="0">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow_users_search" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;startArrow=classic;startFill=1;" parent="1" source="users" target="search_interface" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_query" value="NLP Query" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" parent="arrow_users_search" vertex="1" connectable="0">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint x="945" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend_box" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;dashed=1;" parent="1" vertex="1">
+          <mxGeometry x="1360" y="580" width="200" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_title" value="Legend" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="1360" y="590" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_item1" value="• Tables T1, T2, T3: Transaction data sources" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="1370" y="630" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_item2" value="• PyPDF: Loads and parses PDF documents" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="1370" y="660" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_item3" value="• LLM: Summarizes PDFs to 1000 words" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="1370" y="690" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_item4" value="• Airflow: Orchestrates data collection &amp; grouping" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="1370" y="720" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_item5" value="• Vector DBs: Store embeddings for similarity search" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="1370" y="750" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_item6" value="• Hybrid RAG: Combines multiple vector stores" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="1370" y="780" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_item7" value="• NLP Search: Enables natural language queries" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="1370" y="810" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="notes_box" value="Architecture Notes" style="swimlane;startSize=30;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="1020" y="580" width="280" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="note1" value="Data Flow 1:&lt;br&gt;Tables → Airflow → Vectorize → Vector DBs" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;" parent="notes_box" vertex="1">
+          <mxGeometry x="10" y="40" width="260" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="note2" value="Data Flow 2:&lt;br&gt;PDF → PyPDF → LLM Summary → Airflow → Vectorize → Vector DBs" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;" parent="notes_box" vertex="1">
+          <mxGeometry x="10" y="90" width="260" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="note3" value="Use Case:&lt;br&gt;JioSign users can perform NLP searches on:&lt;br&gt;- PDF document content&lt;br&gt;- Transaction data from tables&lt;br&gt;Using RAG for context-aware results" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;" parent="notes_box" vertex="1">
+          <mxGeometry x="10" y="150" width="260" height="110" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

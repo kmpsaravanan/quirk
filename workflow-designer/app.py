@@ -270,6 +270,30 @@ WORKFLOW_COMPONENTS = {
         'color': '#607D8B',
         'description': 'Archive completed bid documents'
     },
+    'VKYC': {
+        'icon': '🎥',
+        'type': 'action',
+        'color': '#2196F3',
+        'description': 'Video KYC verification for vendor authentication'
+    },
+    'EKYC': {
+        'icon': '🆔',
+        'type': 'action',
+        'color': '#00BCD4',
+        'description': 'Electronic KYC using Aadhaar/PAN verification'
+    },
+    'DigiLocker': {
+        'icon': '🗂️',
+        'type': 'action',
+        'color': '#FF5722',
+        'description': 'Fetch verified documents from DigiLocker'
+    },
+    'Cloud Storage': {
+        'icon': '☁️',
+        'type': 'action',
+        'color': '#3F51B5',
+        'description': 'Store and sync documents to cloud storage'
+    },
     'End Workflow': {
         'icon': '🏁',
         'type': 'end',
@@ -473,11 +497,37 @@ with st.sidebar:
                     st.session_state.workflow_nodes.append(new_node)
                     st.rerun()
         
-        st.markdown("**Additional Components:**")
+        st.markdown("**Identity & Document Verification:**")
         stage3_cols = st.columns(4)
-        stage3_components = ['Approval Gate', 'Email Notification', 'Archive Bid', 'End Workflow']
+        stage3_components = ['VKYC', 'EKYC', 'DigiLocker', 'Cloud Storage']
         for idx, comp_name in enumerate(stage3_components):
             with stage3_cols[idx]:
+                comp_info = WORKFLOW_COMPONENTS[comp_name]
+                if st.button(
+                    f"{comp_info['icon']} {comp_name}",
+                    key=f"add_{comp_name}",
+                    use_container_width=True,
+                    help=comp_info['description']
+                ):
+                    if 'workflow_nodes' not in st.session_state:
+                        st.session_state.workflow_nodes = []
+                    node_id = str(uuid.uuid4())
+                    new_node = {
+                        'id': node_id,
+                        'type': comp_name,
+                        'x': 100 + len(st.session_state.workflow_nodes) * 200,
+                        'y': 100 + len(st.session_state.workflow_nodes) * 150,
+                        'icon': comp_info['icon'],
+                        'color': comp_info['color']
+                    }
+                    st.session_state.workflow_nodes.append(new_node)
+                    st.rerun()
+        
+        st.markdown("**Additional Components:**")
+        stage4_cols = st.columns(4)
+        stage4_components = ['Approval Gate', 'Email Notification', 'Archive Bid', 'End Workflow']
+        for idx, comp_name in enumerate(stage4_components):
+            with stage4_cols[idx]:
                 comp_info = WORKFLOW_COMPONENTS[comp_name]
                 if st.button(
                     f"{comp_info['icon']} {comp_name}",

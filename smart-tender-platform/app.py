@@ -951,9 +951,10 @@ def render_tender_details():
     """, unsafe_allow_html=True)
     
     # Tabs with unique keys
-    tab1, tab2, tab3, tab4, tab5 = st.tabs([
+    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
         "📄 Tender Analysis", 
         "📝 Bid Preparation", 
+        "🆔 Identity & Documents",
         "✅ Compliance Check", 
         "✍️ Digital Signature", 
         "📤 Submission"
@@ -1101,6 +1102,137 @@ def render_tender_details():
                     st.button("📥 Download", key=f"download_tab2_{tender_id_part}_{doc_idx}_{doc['name'].replace(' ', '_').replace('(', '').replace(')', '')}")
     
     with tab3:
+        st.markdown("### 🆔 Identity & Document Verification")
+        st.markdown("""
+        <p style="color: #666; font-size: 16px; margin-bottom: 32px;">
+            Streamline vendor verification with integrated identity and document management solutions
+        </p>
+        """, unsafe_allow_html=True)
+        
+        # VKYC Section
+        st.markdown("""
+        <div class="content-card" style="background: linear-gradient(135deg, #E3F2FD 0%, #ffffff 100%); border-left: 4px solid #2196F3;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                <div style="width: 48px; height: 48px; background: #2196F3; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px;">🎥</div>
+                <h3 class="card-title" style="margin: 0;">Video KYC (VKYC)</h3>
+            </div>
+            <p style="color: #333; margin-bottom: 16px;">Complete vendor verification through secure video calling with authorized personnel.</p>
+            <ul style="color: #333; margin-left: 20px; line-height: 1.8;">
+                <li><strong>Real-time Verification:</strong> Live video call with authorized signatory</li>
+                <li><strong>Document Authentication:</strong> Real-time document verification during call</li>
+                <li><strong>Geo-tagging:</strong> Location verification for compliance</li>
+                <li><strong>Recording:</strong> Secure recording for audit trail</li>
+                <li><strong>Status:</strong> <span style="color: #00A651; font-weight: 600;">✅ Verified on 2025-11-10</span></li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("🎥 Initiate VKYC Session", key=f"vkyc_btn_{tender['id'].replace('/', '_')}", use_container_width=True):
+            st.success("✅ VKYC session scheduled for tomorrow at 10:00 AM. Meeting link sent to registered email.")
+        
+        # EKYC Section
+        st.markdown("""
+        <div class="content-card" style="background: linear-gradient(135deg, #E0F7FA 0%, #ffffff 100%); border-left: 4px solid #00BCD4;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                <div style="width: 48px; height: 48px; background: #00BCD4; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px;">🆔</div>
+                <h3 class="card-title" style="margin: 0;">Electronic KYC (EKYC)</h3>
+            </div>
+            <p style="color: #333; margin-bottom: 16px;">Instant verification using Aadhaar and PAN with UIDAI integration.</p>
+            <ul style="color: #333; margin-left: 20px; line-height: 1.8;">
+                <li><strong>Aadhaar Verification:</strong> OTP-based authentication</li>
+                <li><strong>PAN Verification:</strong> Direct NSDL/Income Tax integration</li>
+                <li><strong>GST Verification:</strong> GSTIN validation</li>
+                <li><strong>Bank Account:</strong> Penny drop verification</li>
+                <li><strong>Processing Time:</strong> <span style="color: #00A651; font-weight: 600;">< 2 minutes</span></li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("🆔 Verify Aadhaar", key=f"aadhaar_btn_{tender['id'].replace('/', '_')}", use_container_width=True):
+                st.success("✅ Aadhaar verified successfully! Name: Rajesh Kumar, DOB: 15-Aug-1985")
+        with col2:
+            if st.button("💳 Verify PAN", key=f"pan_btn_{tender['id'].replace('/', '_')}", use_container_width=True):
+                st.success("✅ PAN verified successfully! PAN: ABCDE1234F, Status: Active")
+        
+        # DigiLocker Section
+        st.markdown("""
+        <div class="content-card" style="background: linear-gradient(135deg, #FFE0B2 0%, #ffffff 100%); border-left: 4px solid #FF5722;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                <div style="width: 48px; height: 48px; background: #FF5722; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px;">🗂️</div>
+                <h3 class="card-title" style="margin: 0;">DigiLocker Integration</h3>
+            </div>
+            <p style="color: #333; margin-bottom: 16px;">Fetch government-issued verified documents directly from DigiLocker.</p>
+            <ul style="color: #333; margin-left: 20px; line-height: 1.8;">
+                <li><strong>Aadhaar Card:</strong> Digitally signed by UIDAI</li>
+                <li><strong>PAN Card:</strong> Issued by Income Tax Department</li>
+                <li><strong>GST Certificate:</strong> GSTN verified</li>
+                <li><strong>Incorporation Certificate:</strong> MCA verified</li>
+                <li><strong>Authenticity:</strong> <span style="color: #00A651; font-weight: 600;">Government verified</span></li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("🗂️ Connect DigiLocker", key=f"digilocker_btn_{tender['id'].replace('/', '_')}", type="primary", use_container_width=True):
+            st.markdown("""
+            <div class="content-card" style="background: #E8F5E9; border-left: 4px solid #4CAF50; margin-top: 20px;">
+                <h3 style="color: #2E7D32; margin-bottom: 12px;">✅ DigiLocker Connected!</h3>
+                <p style="color: #2E7D32; margin-bottom: 16px;"><strong>Documents Available:</strong></p>
+                <ul style="color: #2E7D32; margin-left: 20px;">
+                    <li>✅ Aadhaar Card (Issued: 2018-05-20)</li>
+                    <li>✅ PAN Card (Issued: 2015-03-12)</li>
+                    <li>✅ GST Certificate (Valid till: 2026-12-31)</li>
+                    <li>✅ Driving License (Valid till: 2028-08-15)</li>
+                </ul>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        # Cloud Storage Section
+        st.markdown("""
+        <div class="content-card" style="background: linear-gradient(135deg, #E8EAF6 0%, #ffffff 100%); border-left: 4px solid #3F51B5;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                <div style="width: 48px; height: 48px; background: #3F51B5; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px;">☁️</div>
+                <h3 class="card-title" style="margin: 0;">Cloud Storage Integration</h3>
+            </div>
+            <p style="color: #333; margin-bottom: 16px;">Secure document storage and synchronization across platforms.</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px;">
+                <div style="background: white; padding: 16px; border-radius: 8px; border: 1px solid #e5e5e5; text-align: center;">
+                    <div style="font-size: 32px; margin-bottom: 8px;">☁️</div>
+                    <div style="font-weight: 600; color: #1a1a1a;">Google Drive</div>
+                    <div style="color: #666; font-size: 14px;">15 GB Free</div>
+                </div>
+                <div style="background: white; padding: 16px; border-radius: 8px; border: 1px solid #e5e5e5; text-align: center;">
+                    <div style="font-size: 32px; margin-bottom: 8px;">📦</div>
+                    <div style="font-weight: 600; color: #1a1a1a;">Dropbox</div>
+                    <div style="color: #666; font-size: 14px;">2 GB Free</div>
+                </div>
+                <div style="background: white; padding: 16px; border-radius: 8px; border: 1px solid #e5e5e5; text-align: center;">
+                    <div style="font-size: 32px; margin-bottom: 8px;">📁</div>
+                    <div style="font-weight: 600; color: #1a1a1a;">OneDrive</div>
+                    <div style="color: #666; font-size: 14px;">5 GB Free</div>
+                </div>
+                <div style="background: white; padding: 16px; border-radius: 8px; border: 1px solid #e5e5e5; text-align: center;">
+                    <div style="font-size: 32px; margin-bottom: 8px;">🗄️</div>
+                    <div style="font-weight: 600; color: #1a1a1a;">AWS S3</div>
+                    <div style="color: #666; font-size: 14px;">Enterprise</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            if st.button("☁️ Sync to Cloud", key=f"cloud_sync_btn_{tender['id'].replace('/', '_')}", use_container_width=True):
+                st.success("✅ All documents synced to cloud storage successfully!")
+        with col2:
+            if st.button("📥 Download All", key=f"download_all_btn_{tender['id'].replace('/', '_')}", use_container_width=True):
+                st.success("✅ Downloading all documents... (8 files, 12.5 MB)")
+        with col3:
+            if st.button("🔄 Backup Now", key=f"backup_btn_{tender['id'].replace('/', '_')}", use_container_width=True):
+                st.success("✅ Backup completed! Last backup: " + datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    
+    with tab4:
         st.markdown(f"### ✅ AI-Powered Compliance Verification")
         
         col1, col2 = st.columns([1, 2])
@@ -1226,7 +1358,7 @@ def render_tender_details():
         </div>
         """, unsafe_allow_html=True)
     
-    with tab4:
+    with tab5:
         st.markdown("### ✍️ Digital Signature Workflow (JioSign Integration)")
         
         st.markdown("""
@@ -1357,7 +1489,7 @@ def render_tender_details():
                 
                 st.session_state.signature_complete = True
     
-    with tab5:
+    with tab6:
         st.markdown("### 📤 Portal Submission")
         
         st.markdown("### ✅ Pre-Submission Verification")
